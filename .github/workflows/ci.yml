@@ -79,11 +79,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Configure
-      run: cmake --preset=ci-sanitize
-
     - name: Install TBB
       run: sudo apt-get install libtbb-dev
+
+    - name: Configure
+      run: cmake --preset=ci-sanitize
 
     - name: Build
       run: cmake --build build/sanitize -j 2
@@ -131,7 +131,7 @@ jobs:
       run: sudo apt-get install libtbb-dev
 
     - name: Install TBB (MacOS)
-      if: matrix.os == 'ubuntu-22.04'
+      if: matrix.os == 'macos-12'
       run: brew install tbb
 
     - name: Configure
