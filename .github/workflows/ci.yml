@@ -48,6 +48,9 @@ jobs:
       run: sudo apt-get update -q
         && sudo apt-get install lcov -q -y
 
+    - name: Install TBB
+      run: sudo apt-get install libtbb-dev
+
     - name: Configure
       run: cmake --preset=ci-coverage
 
@@ -78,6 +81,9 @@ jobs:
 
     - name: Configure
       run: cmake --preset=ci-sanitize
+
+    - name: Install TBB
+      run: sudo apt-get install libtbb-dev
 
     - name: Build
       run: cmake --build build/sanitize -j 2
@@ -119,6 +125,14 @@ jobs:
       run: |
         Add-Content "$env:GITHUB_ENV" 'UseMultiToolTask=true'
         Add-Content "$env:GITHUB_ENV" 'EnforceProcessCountAcrossBuilds=true'
+
+    - name: Install TBB (Ubuntu)
+      if: matrix.os == 'ubuntu-22.04'
+      run: sudo apt-get install libtbb-dev
+
+    - name: Install TBB (MacOS)
+      if: matrix.os == 'ubuntu-22.04'
+      run: brew install tbb
 
     - name: Configure
       shell: pwsh
