@@ -100,7 +100,7 @@ auto main(int argc, char* argv[]) -> int
   // NOLINTNEXTLINE(*pointer-arithmetic*)
   http_server.listen(argv[2], port);
 
-  if(stop_thread.has_value()) {
+  if (stop_thread.has_value()) {
     stop_thread.value().join();
   }
   return 0;

@@ -63,7 +63,7 @@ searcher::searcher(const std::filesystem::path& path)
     }
 
     const auto value = content.substr(0, newline);
-    
+
     if (newline + 1 < content.size()) {
       content = content.substr(newline + 1);
     }
@@ -92,7 +92,8 @@ auto searcher::search(std::string_view query) const -> search_result
                         value.m_titles.substr(offset, delim_index);
                     confidence = std::max(
                         // NOLINTNEXTLINE(*magic-numbers*)
-                        confidence, rapidfuzz::fuzz::ratio(query, name) * 1e-2);
+                        confidence,
+                        rapidfuzz::fuzz::ratio(query, name) * 1e-2);
 
                     offset = delim_index + 1;
                   }
