@@ -1,6 +1,6 @@
 # tsv-search
 
-This is the tsv-search project.
+fuzzy search jsonrpc http server thing
 
 # Building and installing
 
@@ -12,8 +12,4 @@ See the [CONTRIBUTING](CONTRIBUTING.md) document.
 
 # Licensing
 
-<!--
-Please go to https://choosealicense.com/licenses/ and choose a license that
-fits your needs. The recommended license for a project of this type is the
-GNU AGPLv3.
--->
+This thing is licensed under the AGPLv3 license because I have autism.
