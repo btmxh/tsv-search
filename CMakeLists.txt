@@ -90,13 +90,19 @@ target_compile_features(tsv-search_lib PUBLIC cxx_std_17)
 target_link_libraries_system(tsv-search_lib rapidfuzz mio TBB::tbb)
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
+  option(BUILD_TESTING OFF)
   FetchContent_Declare(pstld
     URL https://github.com/mikekazakov/pstld/archive/refs/tags/0.1.0.tar.gz
+    CONFIGURE_COMMAND ""
+    BUILD_COMMAND ""
   )
 
-  option(BUILD_TESTING OFF)
-  FetchContent_MakeAvailable(pstld)
-  target_link_libraries_system(tsv-search_lib pstld)
+  FetchContent_GetProperties(pstld)
+  if(NOT pstld_POPULATED)
+    FetchContent_Populate(pstld)
+  endif()
+
+  target_include_directories(tsv-search_lib SYSTEM PRIVATE ${pstld_SOURCE_DIR}/pstld)
 endif()
 
 # ---- Declare executable ----

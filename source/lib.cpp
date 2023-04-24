@@ -13,6 +13,7 @@
 // we need to use an external library
 #ifdef __APPLE__
 #  define PSTLD_HACK_INTO_STD
+#  define PSTLD_HEADER_ONLY
 #  include "pstld.h"
 #else
 #  include <execution>
