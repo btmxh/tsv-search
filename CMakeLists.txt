@@ -20,7 +20,7 @@ endif()
 
 include(FetchContent)
 
-set(FMT_HEADERS "")
+option(TST_LINK_WITH_TBB "link with tbb (required for libstdc++)" OFF)
 
 # ---- Fetch dependencies ----
 FetchContent_Declare(RapidFuzz
@@ -87,13 +87,12 @@ target_include_directories(
 target_compile_features(tsv-search_lib PUBLIC cxx_std_17)
 target_link_libraries_system(tsv-search_lib rapidfuzz mio)
 
-if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+if(${TST_LINK_WITH_TBB})
   find_package(TBB REQUIRED)
   target_link_libraries(tsv-search_lib PRIVATE TBB::tbb)
 endif()
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
-  option(BUILD_TESTING OFF)
   FetchContent_Declare(pstld
     URL https://github.com/mikekazakov/pstld/archive/refs/tags/0.1.0.tar.gz
     CONFIGURE_COMMAND ""
