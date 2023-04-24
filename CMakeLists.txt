@@ -89,7 +89,7 @@ target_link_libraries_system(tsv-search_lib rapidfuzz mio)
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
   find_package(TBB REQUIRED)
-  target_link_libraries(tsv-search_lib TBB::tbb)
+  target_link_libraries(tsv-search_lib PRIVATE TBB::tbb)
 endif()
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
