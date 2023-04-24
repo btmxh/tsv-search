@@ -89,6 +89,15 @@ target_include_directories(
 target_compile_features(tsv-search_lib PUBLIC cxx_std_17)
 target_link_libraries_system(tsv-search_lib rapidfuzz mio TBB::tbb)
 
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
+  FetchContent_Declare(pstld
+    URL https://github.com/mikekazakov/pstld/archive/refs/tags/0.1.0.tar.gz
+  )
+
+  FetchContent_MakeAvailable(pstld)
+  target_link_libraries_system(tsv-search_lib pstld)
+endif()
+
 # ---- Declare executable ----
 
 add_executable(tsv-search_exe source/main.cpp)

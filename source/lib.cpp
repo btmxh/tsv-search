@@ -1,15 +1,22 @@
 #include <algorithm>
 #include <cstring>
-#include <execution>
 #include <iterator>
 #include <mutex>
 #include <unordered_map>
-#include <execution>
 
 #include "lib.hpp"
 
 #include <mio/mmap.hpp>
 #include <rapidfuzz/fuzz.hpp>
+
+// apple clang doesn't support parallel execution
+// we need to use an external library
+#ifdef __APPLE__
+#  define PSTLD_HACK_INTO_STD
+#  include "pstld.h"
+#else
+#  include <execution>
+#endif
 
 namespace tst
 {
@@ -91,10 +98,10 @@ auto searcher::search(std::string_view query) const -> search_result
                   for (const auto delim_index : value.m_delimiters) {
                     const std::string_view name =
                         value.m_titles.substr(offset, delim_index);
-                    confidence = std::max(
-                        // NOLINTNEXTLINE(*magic-numbers*)
-                        confidence,
-                        rapidfuzz::fuzz::ratio(query, name) * 1e-2);
+                    confidence =
+                        std::max(confidence,
+                                 // NOLINTNEXTLINE(*magic-numbers*)
+                                 rapidfuzz::fuzz::ratio(query, name) * 1e-2);
 
                     offset = delim_index + 1;
                   }
