@@ -62,8 +62,6 @@ FetchContent_MakeAvailable(json)
 FetchContent_MakeAvailable(fmt)
 FetchContent_MakeAvailable(cpp-httplib)
 
-find_package(TBB REQUIRED)
-
 function(target_link_libraries_system target)
   set(libs ${ARGN})
   foreach(lib ${libs})
@@ -87,7 +85,12 @@ target_include_directories(
 )
 
 target_compile_features(tsv-search_lib PUBLIC cxx_std_17)
-target_link_libraries_system(tsv-search_lib rapidfuzz mio TBB::tbb)
+target_link_libraries_system(tsv-search_lib rapidfuzz mio)
+
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+  find_package(TBB REQUIRED)
+  target_link_libraries(tsv-search_lib TBB::tbb)
+endif()
 
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
   option(BUILD_TESTING OFF)
