@@ -94,6 +94,7 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "AppleClang")
     URL https://github.com/mikekazakov/pstld/archive/refs/tags/0.1.0.tar.gz
   )
 
+  option(BUILD_TESTING OFF)
   FetchContent_MakeAvailable(pstld)
   target_link_libraries_system(tsv-search_lib pstld)
 endif()
