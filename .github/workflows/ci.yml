@@ -119,13 +119,9 @@ jobs:
         Add-Content "$env:GITHUB_ENV" 'UseMultiToolTask=true'
         Add-Content "$env:GITHUB_ENV" 'EnforceProcessCountAcrossBuilds=true'
 
-    - name: Install TBB (Ubuntu)
+    - name: Install TBB
       if: matrix.os == 'ubuntu-22.04'
       run: sudo apt-get install libtbb-dev
-
-    - name: Install TBB (MacOS)
-      if: matrix.os == 'macos-12'
-      run: brew install tbb
 
     - name: Configure
       shell: pwsh
