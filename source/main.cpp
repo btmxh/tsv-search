@@ -105,31 +105,3 @@ auto main(int argc, char* argv[]) -> int
   }
   return 0;
 }
-
-#if 0
-auto main_test(int argc, char* argv[]) -> int
-{
-  auto start = std::chrono::high_resolution_clock::now();
-  auto measure = [=]
-  {
-    return std::chrono::duration_cast<std::chrono::nanoseconds>(
-               std::chrono::high_resolution_clock::now() - start)
-               .count()
-        * 1e-6;
-  };
-  const tst::searcher searcher {"../../../aod-extras/search.tsv"};
-  auto t1 = measure();
-  const auto result = searcher.search(argc > 1 ? argv[1] : "show by rock");
-  auto t2 = measure();
-  std::cout << result.results.size() << " results:\n";
-  for (size_t i = 0; i < std::min<size_t>(result.results.size(), 10); ++i) {
-    std::cout << result.results[i].identifier << " ("
-              << result.results[i].confidence
-              << ")"
-                 "\n";
-  }
-  auto t3 = measure();
-  std::cout << t1 << " " << t2 << " " << t3 << "\n";
-  return 0;
-}
-#endif
